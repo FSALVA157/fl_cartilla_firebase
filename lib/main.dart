@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Material App',
         initialRoute: 'home',
-        routes: {'home': (_) => HomePage(), 'details': (_) => DetailsPage()},
+        routes: {'home': (_) => HomePage(), 'details': (_) => DetailsScreen()},
         theme: ThemeData.light().copyWith(
             appBarTheme: AppBarTheme(color: Colors.deepPurple),
             floatingActionButtonTheme: FloatingActionButtonThemeData(

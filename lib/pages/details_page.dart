@@ -1,5 +1,5 @@
+import 'package:cartilla_flutter/models/personal_response.dart';
 import 'package:flutter/material.dart';
-import 'package:legajos_app/models/personal_response.dart';
 
 class DetailsScreen extends StatelessWidget {
   const DetailsScreen({Key? key}) : super(key: key);
