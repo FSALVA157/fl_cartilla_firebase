@@ -1,5 +1,7 @@
 import 'package:cartilla_flutter/models/personal_response.dart';
+import 'package:cartilla_flutter/providers/dni_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DetailsScreen extends StatelessWidget {
   const DetailsScreen({Key? key}) : super(key: key);
@@ -8,6 +10,8 @@ class DetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final PersonalElement personal =
         ModalRoute.of(context)!.settings.arguments as PersonalElement;
+
+    final dniProvider = Provider.of<DniProvider>(context);
 
     return Scaffold(
       body: CustomScrollView(
@@ -31,7 +35,7 @@ class _CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-        backgroundColor: Colors.indigo,
+        //backgroundColor: Colors.indigo,
         expandedHeight: 80,
         floating: false,
         pinned: true,
