@@ -13,7 +13,6 @@ class DniProvider extends ChangeNotifier {
   String dniEjemplar = "";
 
   getData(List<String> datos) {
-    print('EJECUTANDO GET DATA!!!');
     this.dniTramite = datos[0];
     this.dniApellido = datos[1];
     this.dniNombre = datos[2];

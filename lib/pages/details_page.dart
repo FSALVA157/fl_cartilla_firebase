@@ -2,6 +2,7 @@ import 'package:cartilla_flutter/models/personal_response.dart';
 import 'package:cartilla_flutter/providers/dni_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stylish_dialog/stylish_dialog.dart';
 
 class DetailsScreen extends StatelessWidget {
   const DetailsScreen({Key? key}) : super(key: key);
@@ -13,7 +14,29 @@ class DetailsScreen extends StatelessWidget {
 
     final dniProvider = Provider.of<DniProvider>(context);
 
+    StylishDialog warningDialog = StylishDialog(
+      context: context,
+      alertType: StylishDialogType.WARNING,
+      titleText: 'ACCESO PROHIBIDO!',
+      contentText:
+          'Esta persona cuenta con prohibición de acceso hasta fecha 01/01/2023',
+    );
+    String dni_number = personal.dni.toString();
+    // if (dni_number == "21633094") {
+    //   warningDialog.show();
+    // }
+
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.redAccent,
+        child: Icon(Icons.verified),
+        onPressed: () {
+          if (dni_number == "21633094") {
+            warningDialog.show();
+          }
+        },
+      ),
       body: CustomScrollView(
         slivers: [
           _CustomAppBar(
