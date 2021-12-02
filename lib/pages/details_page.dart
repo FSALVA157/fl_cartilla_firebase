@@ -27,9 +27,9 @@ class DetailsScreen extends StatelessWidget {
     // }
 
     return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.redAccent,
+        backgroundColor: Colors.white60,
         child: Icon(Icons.verified),
         onPressed: () {
           if (dni_number == "21633094") {

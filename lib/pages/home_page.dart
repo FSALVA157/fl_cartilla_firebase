@@ -1,4 +1,5 @@
 import 'package:cartilla_flutter/providers/dni_provider.dart';
+import 'package:cartilla_flutter/widgets/fondo_bienvenida.dart';
 import 'package:cartilla_flutter/widgets/scan_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,12 +9,15 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final customProvider = Provider.of<DniProvider>(context);
+    String dataDni = customProvider.dniNumero;
+    bool bandera = (dataDni == "") ? false : true;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text('Cartilla Virtual'),
       ),
-      body: DataDNI(),
+      body: bandera ? DataDNI() : FondoBienvenida(),
       floatingActionButton: ScanButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
