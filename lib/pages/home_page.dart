@@ -1,6 +1,6 @@
-import 'package:cartilla_flutter/providers/dni_provider.dart';
-import 'package:cartilla_flutter/widgets/fondo_bienvenida.dart';
-import 'package:cartilla_flutter/widgets/scan_button.dart';
+import 'package:cartilla_firebase_fl/providers/dni_provider.dart';
+import 'package:cartilla_firebase_fl/widgets/fondo_bienvenida.dart';
+import 'package:cartilla_firebase_fl/widgets/scan_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

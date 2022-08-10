@@ -1,6 +1,6 @@
-import 'package:cartilla_flutter/models/personal_response.dart';
-import 'package:cartilla_flutter/providers/dni_provider.dart';
-import 'package:cartilla_flutter/services/visita_service.dart';
+import 'package:cartilla_firebase_fl/models/personal_response.dart';
+import 'package:cartilla_firebase_fl/providers/dni_provider.dart';
+import 'package:cartilla_firebase_fl/services/visita_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:provider/provider.dart';

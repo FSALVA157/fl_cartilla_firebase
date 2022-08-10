@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:cartilla_flutter/models/personal_response.dart';
+import 'package:cartilla_firebase_fl/models/personal_response.dart';
 
 class VisitaService {
   String _baseURL = 'servidorcuerpospps.herokuapp.com';

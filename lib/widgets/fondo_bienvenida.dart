@@ -14,7 +14,7 @@ class FondoBienvenida extends StatelessWidget {
           height: MediaQuery.of(context).size.height,
           decoration: const BoxDecoration(
               image: DecorationImage(
-                  fit: BoxFit.cover, image: AssetImage('assets/control.jpg'))),
+                  fit: BoxFit.cover, image: AssetImage('assets/access_layout_3.jpg'))),
         ),
         Container(
           alignment: Alignment.bottomCenter,

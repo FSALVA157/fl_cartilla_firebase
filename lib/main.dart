@@ -1,6 +1,6 @@
-import 'package:cartilla_flutter/pages/details_page.dart';
-import 'package:cartilla_flutter/pages/home_page.dart';
-import 'package:cartilla_flutter/providers/dni_provider.dart';
+import 'package:cartilla_firebase_fl/pages/details_page.dart';
+import 'package:cartilla_firebase_fl/pages/home_page.dart';
+import 'package:cartilla_firebase_fl/providers/dni_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
