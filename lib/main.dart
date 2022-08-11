@@ -1,19 +1,37 @@
 import 'package:cartilla_firebase_fl/pages/details_page.dart';
 import 'package:cartilla_firebase_fl/pages/home_page.dart';
+import 'package:cartilla_firebase_fl/pages/list.dart';
 import 'package:cartilla_firebase_fl/providers/dni_provider.dart';
+//import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main() => runApp(CartillaAppState());
+import 'package:firebase_core/firebase_core.dart';
+//import 'firebase_options.dart';
+
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(CartillaAppState());
+} 
+  
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    
+    
+
+
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Material App',
         initialRoute: 'home',
-        routes: {'home': (_) => HomePage(), 'details': (_) => DetailsScreen()},
+        routes: {
+          'home': (_) => HomePage(),
+          'details': (_) => DetailsScreen(),
+          'list': (_) => ListScreen()
+          },
         theme: ThemeData.dark().copyWith(
             appBarTheme: AppBarTheme(color: Colors.blueGrey),
             floatingActionButtonTheme:

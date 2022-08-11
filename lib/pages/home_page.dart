@@ -1,4 +1,5 @@
 import 'package:cartilla_firebase_fl/providers/dni_provider.dart';
+import 'package:cartilla_firebase_fl/services/prohibidas_service.dart';
 import 'package:cartilla_firebase_fl/widgets/fondo_bienvenida.dart';
 import 'package:cartilla_firebase_fl/widgets/scan_button.dart';
 import 'package:flutter/material.dart';
@@ -12,10 +13,18 @@ class HomePage extends StatelessWidget {
     final customProvider = Provider.of<DniProvider>(context);
     String dataDni = customProvider.dniNumero;
     bool bandera = (dataDni == "") ? false : true;
+    final servicio = ProhibidasService();
+    servicio.getLista();
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text('Cartilla Virtual'),
+        actions: [
+          IconButton(onPressed: () {
+            Navigator.pushNamed(context, 'list');
+          }, icon: Icon(Icons.list_alt))
+        ],
       ),
       body: bandera ? DataDNI() : FondoBienvenida(),
       floatingActionButton: ScanButton(),

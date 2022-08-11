@@ -15,6 +15,8 @@ class ScanButton extends StatelessWidget {
 
     return FloatingActionButton(
       onPressed: () async {
+        
+
         String barcodeScanRes;
         // Platform messages may fail, so we use a try/catch PlatformException.
         try {

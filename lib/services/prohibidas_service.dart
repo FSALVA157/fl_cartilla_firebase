@@ -10,6 +10,4 @@ class ProhibidasService{
     return listado;
   }
 
-
-
 }
