@@ -1,6 +1,7 @@
 import 'package:cartilla_firebase_fl/pages/details_page.dart';
 import 'package:cartilla_firebase_fl/pages/home_page.dart';
 import 'package:cartilla_firebase_fl/pages/list.dart';
+import 'package:cartilla_firebase_fl/providers/data_provider.dart';
 import 'package:cartilla_firebase_fl/providers/dni_provider.dart';
 //import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +49,11 @@ class CartillaAppState extends StatelessWidget {
       ChangeNotifierProvider(
         create: (context) => DniProvider(),
         lazy: false,
-      )
+      ),
+      ChangeNotifierProvider(
+        create: (context)=>DataProvider(),
+        lazy: false,
+        )
     ]);
   }
 }

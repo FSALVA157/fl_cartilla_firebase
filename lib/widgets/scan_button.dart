@@ -1,4 +1,5 @@
 import 'package:cartilla_firebase_fl/models/personal_response.dart';
+import 'package:cartilla_firebase_fl/providers/data_provider.dart';
 import 'package:cartilla_firebase_fl/providers/dni_provider.dart';
 import 'package:cartilla_firebase_fl/services/visita_service.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ class ScanButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final providerDni = Provider.of<DniProvider>(context);
+    final dataProvider = Provider.of<DataProvider>(context);
 
     return FloatingActionButton(
       onPressed: () async {
@@ -21,7 +23,8 @@ class ScanButton extends StatelessWidget {
         // Platform messages may fail, so we use a try/catch PlatformException.
         try {
           barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-              '#ff6666', 'Cancel', true, ScanMode.DEFAULT);
+              '#ff6666', 'Cancel', true, ScanMode.DEFAULT
+              );
           if (barcodeScanRes == '-1') {
             return StylishDialog(
               context: context,
@@ -38,12 +41,17 @@ class ScanButton extends StatelessWidget {
               titleText: 'Código No Váido!',
             ).show();
           }
+
+
+
           StylishDialog errorDialog = StylishDialog(
               context: context,
               alertType: StylishDialogType.ERROR,
-              titleText: 'No Empadronado!',
-              contentText:
-                  "Esta persona no figura en la base de datos del Sistema de Visitas");
+              titleText: 'NO PUEDE INGRESAR!',
+              contentText:"Esta persona figura en el listado de Prohibiciones",
+              dismissOnTouchOutside: true,
+              );
+
           StylishDialog dialog = StylishDialog(
             context: context,
             alertType: StylishDialogType.PROGRESS,
@@ -51,15 +59,32 @@ class ScanButton extends StatelessWidget {
             titleText: 'Procesando...',
             dismissOnTouchOutside: false,
           );
+
+          StylishDialog dialogAutorizado = StylishDialog(
+            context: context,
+            alertType: StylishDialogType.SUCCESS,
+            animationLoop: false,
+            titleText: 'Persona Autorizada!!',
+            dismissOnTouchOutside: true,
+          );
+
           dialog.show();
           providerDni.getData(array);
           String dato_dni = array[4].toString();
           var servicio = VisitaService();
 
           try {
-            PersonalElement visita = await servicio.getByDni(dato_dni);
-            dialog.dismiss();
-            Navigator.pushNamed(context, 'details', arguments: visita);
+            //PersonalElement visita = await servicio.getByDni(dato_dni);
+            var bandera = await dataProvider.verificarProhibida(dato_dni);            
+            print('VISITA PROHIBIDA: $bandera');
+            if(bandera){
+              dialog.dismiss();
+              errorDialog.show();  
+            }else{
+              dialog.dismiss();
+              dialogAutorizado.show();
+            }
+            //Navigator.pushNamed(context, 'details', arguments: visita);
           } catch (e) {
             dialog.dismiss();
             errorDialog.show();
