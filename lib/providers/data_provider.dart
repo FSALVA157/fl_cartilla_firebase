@@ -22,6 +22,20 @@ class DataProvider extends ChangeNotifier{
     return await this.service.verificar(dni);
   }
 
+   Stream<QuerySnapshot<Map<String, dynamic>>> filtrarLista(String valor) {
+    var temporal = this.listStream;
+    // var respuesta = await  temporal.toList();
+    // respuesta.where((element) => element.docs.elementAt(0).get('nombre') == "Salva");
+    // respuesta[0].docs.elementAt(0).get('nombre');
+    
+    // var res =  temporal.where((event){
+    //     event.
+    //     event.get('apellido')=="valor"
+    // }  );
+    temporal.listen(print); // Outputs event values: 4,5,6.    
+    return temporal;
+  }
+
 
 
 }

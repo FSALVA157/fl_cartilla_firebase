@@ -1,33 +1,60 @@
+
 import 'package:cartilla_firebase_fl/providers/data_provider.dart';
-import 'package:cartilla_firebase_fl/widgets/lista_search_delegate.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ListScreen extends StatelessWidget {
-   
-  const ListScreen({Key? key}) : super(key: key);
-  
+class ListaSearchDelegate extends SearchDelegate{
+
+
   @override
-  Widget build(BuildContext context) {
-    final dataProvider = Provider.of<DataProvider>(context);
-
-    return  Scaffold(
-      backgroundColor: Colors.blueGrey[900],
-      appBar: AppBar(
-        centerTitle: true,
-        actions: [
+  List<Widget>? buildActions(BuildContext context) {
+      return [
           IconButton(
-            onPressed: () => showSearch(
-              context: context,
-              delegate: ListaSearchDelegate()),
-           icon: Icon(Icons.search_outlined, color: Colors.yellow,size: 30,))
-        ],
+            onPressed: () => query = "",
+            icon: const Icon(Icons.close))
+      ];
+    
+  }
 
-      ),
-      body: StreamBuilder (
-            stream: dataProvider.listStream,
+  @override
+  Widget? buildLeading(BuildContext context) {
+    return IconButton(
+      onPressed: () => close(context, null),
+      icon: Icon(Icons.arrow_back_outlined));
+
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    return Text("Build Results");
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+        print('LA QUERY ES: ${query}');
+        final dataProvider = Provider.of<DataProvider>(context);
+        if(query.isEmpty){
+          return emptyContainer();
+        }else{
+          Stream<QuerySnapshot<Map<String, dynamic>>> resultado = dataProvider.filtrarLista(query);
+          return fullContainer(resultado);
+        }
+
+  }
+
+  Widget  emptyContainer(){
+      return  Container(
+      child:  const  Center(
+      child:  Icon(Icons.movie_rounded, color:  Colors.yellowAccent,size:  100),
+      ),);
+    }
+
+
+    Widget fullContainer(Stream<QuerySnapshot<Map<String, dynamic>>> resultado){
+      
+      return StreamBuilder (
+            stream: resultado,
             builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot){
               if (!snapshot.hasData){
                 return const Center(
@@ -80,7 +107,7 @@ class ListScreen extends StatelessWidget {
                  itemCount: docs.length
                  );
             }
-            ),        
-    );
-  }
+            );        
+    }
+
 }
