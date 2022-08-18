@@ -47,8 +47,8 @@ class ScanButton extends StatelessWidget {
           StylishDialog errorDialog = StylishDialog(
               context: context,
               alertType: StylishDialogType.ERROR,
-              titleText: 'NO PUEDE INGRESAR!',
-              contentText:"Esta persona figura en el listado de Prohibiciones",
+              titleText: 'NO PUEDE INGRESAR!',              
+              //contentText: dataProvider.data.toString(),
               dismissOnTouchOutside: true,
               );
 
@@ -76,11 +76,23 @@ class ScanButton extends StatelessWidget {
           try {
             //PersonalElement visita = await servicio.getByDni(dato_dni);
             var bandera = await dataProvider.verificarProhibida(dato_dni);            
-            print('VISITA PROHIBIDA: $bandera');
             if(bandera){
+              print('LA BANDERA ES TRUE');
+              print(dataProvider.data);
               dialog.dismiss();
               errorDialog.show();  
+              showDialog(
+                context: context, 
+                builder: (context){
+                    return AlertDialog(
+                         title: Text('Motivo de la Prohibicion'),
+                         content: Text(dataProvider.data),
+                       );
+                }
+                );
+              
             }else{
+            
               dialog.dismiss();
               dialogAutorizado.show();
             }

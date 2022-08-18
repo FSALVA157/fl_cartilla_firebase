@@ -1,3 +1,4 @@
+import 'package:cartilla_firebase_fl/providers/data_provider.dart';
 import 'package:cartilla_firebase_fl/providers/dni_provider.dart';
 import 'package:cartilla_firebase_fl/services/prohibidas_service.dart';
 import 'package:cartilla_firebase_fl/widgets/fondo_bienvenida.dart';
@@ -39,6 +40,8 @@ class DataDNI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final miProvider = Provider.of<DniProvider>(context);
+    final providerData = Provider.of<DataProvider>(context);
+    //final id = providerData.selectedPerson.id ?? "";
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 25.0),
@@ -54,6 +57,7 @@ class DataDNI extends StatelessWidget {
               maxLines: 2,
             ),
           ),
+      //    MiTexto(texto: 'ID DE BD: ', texto2: id),
           MiTexto(texto: 'NUMERO DE DOCUMENTO: ', texto2: miProvider.dniNumero),
           MiTexto(texto: 'APELLIDO: ', texto2: miProvider.dniApellido),
           MiTexto(texto: 'NOMBRE: ', texto2: miProvider.dniNombre),

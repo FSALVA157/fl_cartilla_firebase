@@ -27,18 +27,47 @@ class ListaSearchDelegate extends SearchDelegate{
 
   @override
   Widget buildResults(BuildContext context) {
-    return Text("Build Results");
+     //print('LA QUERY ES: ${query}');
+        final dataProvider = Provider.of<DataProvider>(context);
+          dataProvider.filtrarLista(query);
+         //  return emptyContainer();
+        if(query.isEmpty){
+          return emptyContainer();
+        }else{
+          List<QueryDocumentSnapshot<Map<String, dynamic>>> resultado = dataProvider.filtrarLista(query);
+         
+          if(resultado.isEmpty){
+            return  Container(
+                    child:    Center(
+                    child:  Column(
+                      children: [
+                        Icon(Icons.all_inclusive, color:  Colors.yellowAccent,size:  150),
+                        Text('La Persona que Busca no se encuentra en la lista de Prohibiciones', style: TextStyle(color: Colors.yellowAccent, fontSize: 20, fontWeight: FontWeight.bold),)
+                      ],
+                    ),
+              ),);;
+          }else{
+            return fullContainer(resultado, context);
+          }
+        }
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-        print('LA QUERY ES: ${query}');
+       // print('LA QUERY ES: ${query}');
         final dataProvider = Provider.of<DataProvider>(context);
+          dataProvider.filtrarLista(query);
+         //  return emptyContainer();
         if(query.isEmpty){
           return emptyContainer();
         }else{
-          Stream<QuerySnapshot<Map<String, dynamic>>> resultado = dataProvider.filtrarLista(query);
-          return fullContainer(resultado);
+          List<QueryDocumentSnapshot<Map<String, dynamic>>> resultado = dataProvider.filtrarLista(query);
+          //return fullContainer(resultado, context);
+          if(resultado.isEmpty){
+            return const Center(child: CircularProgressIndicator());
+          }else{
+          return fullContainer(resultado, context);
+          }
         }
 
   }
@@ -51,26 +80,18 @@ class ListaSearchDelegate extends SearchDelegate{
     }
 
 
-    Widget fullContainer(Stream<QuerySnapshot<Map<String, dynamic>>> resultado){
+    Widget fullContainer(List<QueryDocumentSnapshot<Map<String, dynamic>>> resultado, BuildContext context){
       
-      return StreamBuilder (
-            stream: resultado,
-            builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot){
-              if (!snapshot.hasData){
-                return const Center(
-                  child:  CircularProgressIndicator(),
-                );
-              }
               
-              List<DocumentSnapshot> docs = snapshot.data!.docs;
               return ListView.separated(
+
                 padding: EdgeInsets.all(20),
                 itemBuilder: (_, int index){
-                  String nombre = "${docs.elementAt(index).get('apellido')} ${docs.elementAt(index).get('nombre')}";
-                  String motivo = "${docs.elementAt(index).get('motivo')}";
+                  String nombre = "${resultado.elementAt(index).get('apellido')} ${resultado.elementAt(index).get('nombre')}";
+                  String motivo = "${resultado.elementAt(index).get('motivo')}";
                   //String dni = "${docs.elementAt(index).id}";
-                  String dni = "${docs.elementAt(index).get('dni')}";
-                  String categoria = "${docs.elementAt(index).get('categoria')}";
+                  String dni = "${resultado.elementAt(index).get('dni')}";
+                  String categoria = "${resultado.elementAt(index).get('categoria')}";
                   //otra manera de obtener el documento
                   //Map<String, dynamic>? docData = snapshot.data!.docs[index].data();
 
@@ -104,10 +125,10 @@ class ListaSearchDelegate extends SearchDelegate{
                  separatorBuilder: (_, __){
                   return const Divider(color: Colors.white,);
                  },
-                 itemCount: docs.length
+                 itemCount: resultado.length
                  );
             }
-            );        
+            //);        
     }
 
-}
+//}

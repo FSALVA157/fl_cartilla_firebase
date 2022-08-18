@@ -7,8 +7,10 @@ import 'package:flutter/material.dart';
 class DataProvider extends ChangeNotifier{
 
   late Stream<QuerySnapshot<Map<String, dynamic>>> listStream;
-  late Query<Map<String, dynamic>> selectedPerson;
+  late QueryDocumentSnapshot<Map<String, dynamic>> selectedPerson;
+  late String data;
   final service = ProhibidasService();
+  late List<QueryDocumentSnapshot<Map<String, dynamic>>> listaXdni;
 
   DataProvider(){
     this.cargarLista();
@@ -18,22 +20,23 @@ class DataProvider extends ChangeNotifier{
     this.listStream = await service.getLista();    
   }
 
-  Future<bool> verificarProhibida(String dni)async {
-    return await this.service.verificar(dni);
+  Future<bool> verificarProhibida(String dni) async{
+     var info = await this.service.verificar(dni).then((value) {
+         return value;
+     });
+     
+     if(info != ""){
+        this.data = info;
+        return true;
+     }else{
+      return false;
+     }
   }
 
-   Stream<QuerySnapshot<Map<String, dynamic>>> filtrarLista(String valor) {
-    var temporal = this.listStream;
-    // var respuesta = await  temporal.toList();
-    // respuesta.where((element) => element.docs.elementAt(0).get('nombre') == "Salva");
-    // respuesta[0].docs.elementAt(0).get('nombre');
-    
-    // var res =  temporal.where((event){
-    //     event.
-    //     event.get('apellido')=="valor"
-    // }  );
-    temporal.listen(print); // Outputs event values: 4,5,6.    
-    return temporal;
+   filtrarLista(String dni) {
+      this.listaXdni = this.service.buscarPorDNI(dni);
+      return this.listaXdni;
+      //notifyListeners();
   }
 
 
