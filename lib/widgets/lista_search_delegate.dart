@@ -38,6 +38,7 @@ class ListaSearchDelegate extends SearchDelegate{
          
           if(resultado.isEmpty){
             return  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                     child:    Center(
                     child:  Column(
                       children: [
